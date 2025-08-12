@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Redirect</title>
+</head>
+<body>
+    <label for="otp">OTP: </label>
+    <input type="text" id="otp" name="otp" />
+    <button id="continueBtn">Continue</button>
+
+    <script>
+        document.getElementById('continueBtn').addEventListener('click', function() {
+            const otpValue = document.getElementById('otp').value.trim();
+            if (otpValue) {
+                const url = `https://app.naranjax.com.mx/login/email-otp?otp=${encodeURIComponent(otpValue)}`;
+                window.location.href = url;
+            } else {
+                alert('Please enter your OTP');
+            }
+        });
+    </script>
+</body>
+</html>
