@@ -15,7 +15,7 @@
         document.getElementById('continueBtn').addEventListener('click', function() {
             const otpValue = document.getElementById('otp').value.trim();
             if (otpValue) {
-                const url = `https://app.naranjax.com.mx/login/email-otp?otp=617899`;
+                const url = `https://app.naranjax.com.mx/login/email-otp?otp=${otpValue}`;
                 window.location.href = url;
             } else {
                 alert('Please enter your OTP');
