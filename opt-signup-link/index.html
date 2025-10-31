@@ -34,12 +34,6 @@
             const otp = otpInput.value.trim();
             const env = [...radios].find(r => r.checked)?.value;
 
-            if (!otp || !env) {
-                link.textContent = "Select an environment and enter OTP";
-                link.removeAttribute("href");
-                return;
-            }
-
             const baseUrl = env === "stage"
             ? "https://e1-app.naranjax.com.mx/login/email-otp?otp="
             : "https://app.naranjax.com.mx/login/email-otp?otp=";
