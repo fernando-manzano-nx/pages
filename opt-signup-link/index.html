@@ -7,22 +7,50 @@
 </head>
 <body>
     <form>
-        <label for="otp">OTP: </label>
-        <input type="text" id="otp" name="otp" />
-        <button id="continueBtn">Continue</button>
-        <a href="https://e1-app.naranjax.com.mx/login/email-otp?otp=123123">Universal link to Lusail stage</a>
-        <a href="https://app.naranjax.com.mx/login/email-otp?otp=123123">Universal link to Lusail prod</a>
+        <div>
+            <label for="otp">OTP: </label>
+            <input type="text" id="otp" name="otp" />
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="env" value="stage"/>
+                Stage
+            </label>
+            <label>
+                <input type="radio" name="env" value="prod"/>
+                Prod
+            </label>
+        </div>
+        <div>
+            <a id="redirectLink" href=""></a>
+        </div>
     </form>
     <script>
-        document.getElementById('continueBtn').addEventListener('click', function() {
-            const otpValue = document.getElementById('otp').value.trim();
-            if (otpValue) {
-                const url = `https://app.naranjax.com.mx/login/email-otp?otp=${otpValue}`;
-                window.location.href = url;
-            } else {
-                alert('Please enter your OTP');
+        const otpInput = document.getElementById('otp');
+        const radios = document.querySelectorAll('input[name="env"]');
+        const link = document.getElementById('redirectLink');
+
+        function updateLink() {
+            const otp = otpInput.value.trim();
+            const env = [...radios].find(r => r.checked)?.value;
+
+            if (!otp || !env) {
+                link.textContent = "Select an environment and enter OTP";
+                link.removeAttribute("href");
+                return;
             }
-        });
+
+            const baseUrl = env === "stage"
+            ? "https://e1-app.naranjax.com.mx/login/email-otp?otp="
+            : "https://app.naranjax.com.mx/login/email-otp?otp=";
+
+            let finalUrl = baseUrl + otp;
+            link.href = finalUrl;
+            link.textContent = finalUrl;
+        }
+
+        otpInput.addEventListener('input', updateLink);
+        radios.forEach(r => r.addEventListener('change', updateLink));
     </script>
 </body>
 </html>
